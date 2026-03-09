@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+
+<!-- ==============================
+     SECCION HTML EMPIEZA AQUI
+     Todo lo que el usuario VE
+     en pantalla va en esta parte
+============================== -->
+
+<head>
+  <title>Mi Arbol</title>
+
+  <!-- ==============================
+       SECCION CSS EMPIEZA AQUI
+       Todo lo que da ESTILO y COLOR
+       va dentro de la etiqueta style
+  ============================== -->
+  <style>
+
+    /* body = toda la pagina */
+    body {
+      background-color: #1a1a2e;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+
+    /* titulo principal */
+    h1 {
+      color: #4f8ef7;
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+
+    /* cada tarjeta es una seccion */
+    .tarjeta {
+      background-color: #0f0f1a;
+      border: 1px solid #2e3245;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    /* titulo de cada tarjeta */
+    .tarjeta h2 {
+      color: #4f8ef7;
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+
+    /* descripcion de cada tarjeta */
+    .tarjeta p {
+      color: #aaaaaa;
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+    }
+
+    /* input de una linea */
+    input {
+      padding: 10px 16px;
+      font-size: 1rem;
+      border: 2px solid #2e3245;
+      border-radius: 8px;
+      background-color: #1a1a2e;
+      color: white;
+      outline: none;
+      width: 75%;
+    }
+
+    /* input cuando el usuario hace click en el */
+    input:focus {
+      border-color: #4f8ef7;
+    }
+
+    /* area de texto para JSON */
+    textarea {
+      padding: 10px 16px;
+      font-size: 0.9rem;
+      border: 2px solid #2e3245;
+      border-radius: 8px;
+      background-color: #1a1a2e;
+      color: white;
+      outline: none;
+      width: 75%;
+      height: 100px;
+      resize: vertical;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* textarea cuando el usuario hace click en el */
+    textarea:focus {
+      border-color: #4f8ef7;
+    }
+
+    /* boton generar */
+    button {
+      padding: 10px 20px;
+      font-size: 0.95rem;
+      background-color: #4f8ef7;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-left: 8px;
+      vertical-align: top;
+    }
+
+    /* boton cuando el mouse esta encima */
+    button:hover {
+      background-color: #2e6fdb;
+    }
+
+    /* caja donde se dibuja el arbol */
+    #miArbol {
+      margin-top: 30px;
+      padding: 30px;
+      background-color: #0f0f1a;
+      border: 1px solid #2e3245;
+      border-radius: 12px;
+      min-height: 200px;
+      color: #aaaaaa;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+  </style>
+  <!-- ==============================
+       SECCION CSS TERMINA AQUI
+  ============================== -->
+
+</head>
+
+<!-- ==============================
+     BODY = lo que se ve en pantalla
+     Todo el contenido va aqui
+============================== -->
+<body>
+
+  <!-- titulo de la pagina -->
+  <h1> Visualizador de Arboles</h1>
+
+  <!-- TARJETA 1: Numeros -->
+  <div class="tarjeta">
+    <h2>🔢 Numeros</h2>
+    <p>Escribe numeros separados por comas. Se creara un arbol binario de busqueda (BST).</p>
+    <input type="text" id="inputNumeros" placeholder="Ejemplo: 5, 3, 7, 1, 4">
+    <button onclick="leerNumeros()"> Generar</button>
+  </div>
+
+  <!-- TARJETA 2: Expresion matematica -->
+  <div class="tarjeta">
+    <h2> Expresion matematica</h2>
+    <p>Escribe una expresion. Se creara un arbol respetando el orden de operaciones.</p>
+    <input type="text" id="inputExpresion" placeholder="Ejemplo: 3 + 4 * 2">
+    <button>Generar</button>
+  </div>
+
+  <!-- TARJETA 3: JSON -->
+  <div class="tarjeta">
+    <h2> JSON</h2>
+    <p>Pega una estructura en formato JSON con "name" y "children".</p>
+    <textarea id="inputJSON" placeholder='{"name": "A", "children": [{"name": "B"}, {"name": "C"}]}'></textarea>
+    <button style="vertical-align: bottom;">Generar</button>
+  </div>
+
+  <!-- caja donde aparece el arbol -->
+  <div id="miArbol">
+    Aqui va a aparecer el arbol...
+  </div>
+
+</body>
+<!-- ==============================
+     SECCION HTML TERMINA AQUI
+============================== -->
+
+<script>
+    console.log("Java Script funcionando")
+
+class Nodo {
+
+    constructor(valor){
+        this.valor = valor;
+        this.izquierda = null;
+        this.derecha = null;
+    }
+}
+
+let raiz = null;
+
+function insertar(valor){
+    let nuevo = new Nodo(valor);
+
+    if(raiz === null){
+        raiz = nuevo;
+        return;
+    }
+
+    let actual = raiz;
+
+    while(true){
+        if (valor < actual.valor){
+
+            if(actual.izquierda === null){
+                actual.izquierda = nuevo;
+                return;
+            }
+
+            actual = actual.izquierda;
+        } else{
+
+            if(actual.derecha === null){
+                actual.derecha = nuevo;
+                return;
+            }
+
+            actual = actual.derecha;
+
+        }
+    }
+    
+}
+
+function leerNumeros(){
+
+    let input = document.getElementById("inputNumeros");
+
+    let texto = input.value;
+
+    let lista = texto.split(",")
+
+    for (let i = 0; i< lista.length; i++){
+        lista[i] = Number(lista[i].trim());
+
+        if(isNaN(lista[i])){
+            alert("Error: solo se permiten numero enteros y debn estar separado por comas");
+            return;
+        }
+    }
+
+    raiz = null;
+
+    for(let i = 0; i < lista.length; i ++){
+
+        insertar(lista[i]);
+    }   
+    console.log(raiz)
+
+    console.log("INORDEN");
+    inorden(raiz);
+
+    console.log("PREORDEN");
+    preorden(raiz);
+
+    console.log("POSTORDEN");
+    postorden(raiz);
+
+    let caja = document.getElementById("miArbol");
+
+    caja.innerHTML = "<b>Arbol creado correctamente</b><br><br>";
+
+    caja.innerHTML += "INORDEN: ";
+    inordenHTML(raiz);
+
+    caja.innerHTML += "<br><br>PREORDEN: ";
+    preordenHTML(raiz);
+
+    caja.innerHTML += "<br><br>POSTORDEN: ";
+    postordenHTML(raiz);
+
+}
+
+function inorden(nodo){
+    if(nodo !== null){
+        inorden(nodo.izquierda);
+        console.log(nodo.valor);
+        inorden(nodo.derecha);
+    }
+}
+
+function preorden(nodo){
+    if(nodo !== null){
+        console.log(nodo.valor);
+        preorden(nodo.izquierda);
+        preorden(nodo.derecha);
+    }
+}
+
+function postorden(nodo){
+    if(nodo !== null){
+        postorden(nodo.izquierda);
+        postorden(nodo.derecha);
+        console.log(nodo.valor);
+    }
+}
+
+function inordenHTML(nodo){
+    if(nodo !== null){
+        inordenHTML(nodo.izquierda);
+        let caja = document.getElementById("miArbol");
+        caja.innerHTML += nodo.valor + " ";
+
+        inordenHTML(nodo.derecha);
+    }
+}
+
+function preordenHTML(nodo){
+    if(nodo!== null){
+        let caja = document.getElementById("miArbol");
+        caja.innerHTML += nodo.valor + " ";
+
+        preordenHTML(nodo.izquierda);
+        preordenHTML(nodo.derecha);
+    } 
+}
+
+function postordenHTML(nodo){
+    if(nodo !== null){
+        postordenHTML(nodo.izquierda);
+        postordenHTML(nodo.derecha);
+
+        let caja = document.getElementById("miArzbol");
+        caja.innerHTML += nodo.valor + " ";
+    }
+}
+
+</script>
+
+</html>
+
