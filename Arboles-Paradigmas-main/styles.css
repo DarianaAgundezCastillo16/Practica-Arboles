@@ -1,0 +1,231 @@
+/* ==============================
+   VARIABLES DE COLOR
+   Cambia los colores aqui para
+   afectar toda la pagina
+============================== */
+:root {
+  --azul:       #58a6ff;
+  --morado:     #bc13fe;
+  --fondo:      #0b0e14;
+  --tarjeta:    #161b22;
+  --linea:      #30363d;
+}
+
+/* ==============================
+   ESTILOS BASE
+============================== */
+
+/* toda la pagina */
+body {
+  background-color: var(--fondo);
+  color: white;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+/* titulo principal */
+h1 {
+  color: var(--azul);
+  margin-bottom: 30px;
+}
+
+/* ==============================
+   TARJETAS DE ENTRADA
+============================== */
+
+/* contenedor de cada seccion */
+.tarjeta {
+  background-color: var(--tarjeta);
+  border: 1px solid var(--linea);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 0 auto 20px auto;
+  max-width: 650px;
+  text-align: left;
+}
+
+/* titulo de cada tarjeta */
+.tarjeta h2 {
+  color: var(--azul);
+  font-size: 1.1rem;
+  margin-top: 0;
+}
+
+/* descripcion de cada tarjeta */
+.tarjeta p {
+  color: #8b949e;
+  font-size: 0.85rem;
+}
+
+/* ==============================
+   CAMPOS DE ENTRADA
+============================== */
+
+/* input de una linea y textarea comparten estilo */
+input, textarea {
+  padding: 10px;
+  background: #0d1117;
+  border: 1px solid var(--linea);
+  color: white;
+  border-radius: 6px;
+  width: 75%;
+  outline: none;
+}
+
+/* textarea es mas alto y usa fuente de codigo */
+textarea {
+  height: 80px;
+  resize: vertical;
+  font-family: monospace;
+}
+
+/* borde azul cuando el usuario hace click */
+input:focus, textarea:focus {
+  border-color: var(--azul);
+}
+
+/* ==============================
+   BOTON
+============================== */
+
+button {
+  background-color: #238636;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+/* color mas claro al pasar el mouse */
+button:hover {
+  background-color: #2ea043;
+}
+
+/* ==============================
+   CONTENEDOR DEL ARBOL
+============================== */
+
+/* caja con fondo punteado donde aparece el arbol */
+.canvas-container {
+  background-color: #0d1117;
+  margin-top: 30px;
+  padding: 40px;
+  border-radius: 20px;
+  overflow-x: auto;
+  background-image: radial-gradient(#1b2735 1px, transparent 1px);
+  background-size: 20px 20px;
+  min-height: 300px;
+  border: 1px solid var(--linea);
+}
+
+/* ==============================
+   ESTILO DEL ARBOL (nodos y lineas)
+============================== */
+
+/* lista que forma el arbol */
+.tree ul {
+  padding-top: 20px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+/* cada nodo del arbol */
+.tree li {
+  float: left;
+  text-align: center;
+  list-style-type: none;
+  position: relative;
+  padding: 20px 5px 0 5px;
+}
+
+/* lineas horizontales entre nodos hermanos */
+.tree li::before,
+.tree li::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 50%;
+  border-top: 2px solid var(--linea);
+  width: 50%;
+  height: 20px;
+}
+
+.tree li::after {
+  right: auto;
+  left: 50%;
+  border-left: 2px solid var(--linea);
+}
+
+/* si el nodo no tiene hermanos, sin lineas */
+.tree li:only-child::after,
+.tree li:only-child::before { display: none; }
+.tree li:only-child         { padding-top: 0; }
+
+/* ajustes de esquinas en los extremos */
+.tree li:first-child::before,
+.tree li:last-child::after  { border: 0 none; }
+.tree li:last-child::before { border-right: 2px solid var(--linea); border-radius: 0 5px 0 0; }
+.tree li:first-child::after { border-radius: 5px 0 0 0; }
+
+/* nodo con forma de pildora */
+.node-pildora {
+  border: 2px solid var(--azul);
+  background: rgba(88, 166, 255, 0.1);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 50px;
+  display: inline-block;
+  position: relative;
+  box-shadow: 0 0 15px rgba(88, 166, 255, 0.2);
+  z-index: 10;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+/* nodo raiz con color morado */
+.node-pildora.root {
+  border-color: var(--morado);
+  box-shadow: 0 0 20px rgba(188, 19, 254, 0.4);
+}
+
+/* ==============================
+   RECORRIDOS (inorden, preorden...)
+============================== */
+#resultadosTexto {
+  margin: 20px auto;
+  max-width: 650px;
+  padding: 15px;
+  background: var(--tarjeta);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #c9d1d9;
+  line-height: 1.6;
+}
+
+/* ==============================
+   ANIMACION DE RECORRIDO
+============================== */
+
+.visitado{
+  background: #ffcc00;
+  color: black;
+  transform: scale(1.25);
+  box-shadow: 0 0 20px #ffcc00;
+  border-color: #ffcc00;
+  transition: all 0.3s ease;
+}
+
+.node-vacio {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  visibility: hidden;
+  border: none;
+  background: transparent;
+}
+ 
