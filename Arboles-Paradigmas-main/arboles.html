@@ -1,80 +1,82 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<!-- ==============================
-     SECCION HTML
-============================== -->
- 
 <head>
   <meta charset="UTF-8">
   <title>Arboles Binarios</title>
-
-  <!-- Conexion al archivo CSS -->
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-  <!-- titulo principal -->
   <h1>Arboles Binarios</h1>
 
-  <!-- ==============================
-       TARJETA NUEVA: Arbol Aleatorio
-       El usuario solo presiona el boton
-       y el arbol se genera solo
-  ============================== -->
-  <div class="tarjeta">
-    <h2>🎲 Arbol Aleatorio (BST)</h2>
-    <p>Genera un arbol binario de busqueda con 7 numeros aleatorios. Solo presiona el boton.</p>
-    <button onclick="generarBSTAleatorio()">Generar Arbol Aleatorio</button>
-  </div>
+  <div class="layout">
 
-  <!-- TARJETA 1: Numeros BST -->
-  <div class="tarjeta">
-    <h2>Numeros (BST)</h2>
-    <p>Crea un arbol binario de busqueda a partir de una lista.</p>
-    <input type="text" id="inputNumeros" placeholder="Ej: 50, 30, 70, 20, 40">
-    <button onclick="procesarNumeros()">Generar</button>
+    <!-- ==============================
+         COLUMNA IZQUIERDA: tarjetas
+    ============================== -->
+    <div class="columna-izquierda">
 
-    <br><br>
+      <!-- TARJETA: Arbol Aleatorio -->
+      <div class="tarjeta">
+        <h2>🎲 Arbol Aleatorio (BST)</h2>
+        <p>Genera 7 numeros aleatorios. La animacion corre sola.</p>
+        <button onclick="generarBSTAleatorio()">Generar Arbol Aleatorio</button>
+      </div>
 
-    <button onclick="buscarNumero()">Buscar Numero Binario</button>
-    <button onclick="recorrerAnchura()">Recorrido por Anchura BFS</button>
-    <button onclick="recorrerProfundidad()">Recorrido Profundidad DFS</button>
-  </div>
+      <!-- TARJETA 1: Numeros BST -->
+      <div class="tarjeta">
+        <h2>Numeros (BST)</h2>
+        <p>Crea un arbol a partir de una lista de numeros.</p>
+        <input type="text" id="inputNumeros" placeholder="Ej: 50, 30, 70, 20, 40">
+        <button onclick="procesarNumeros()">Generar</button>
+        <br>
+        <button onclick="buscarNumero()">Buscar Numero</button>
+        <button onclick="recorrerAnchura()">BFS</button>
+        <button onclick="recorrerProfundidad()">DFS</button>
+      </div>
 
-  <!-- TARJETA 2: Expresion matematica -->
-  <div class="tarjeta">
-    <h2>Expresion Matematica</h2>
-    <p>Visualiza la jerarquia de una operacion.</p>
-    <input type="text" id="inputExpresion" placeholder="Ej: (A + B) * C">
-    <button onclick="leerExpresion()">Generar</button>
-  </div>
+      <!-- TARJETA 2: Expresion matematica -->
+      <div class="tarjeta">
+        <h2>Expresion Matematica</h2>
+        <p>Visualiza la jerarquia de una operacion. La animacion corre sola.</p>
+        <input type="text" id="inputExpresion" placeholder="Ej: (A + B) * C">
+        <button onclick="leerExpresion()">Generar</button>
+      </div>
 
-  <!-- TARJETA 3: JSON -->
-  <div class="tarjeta">
-    <h2>Estructura JSON</h2>
-    <p>Pega un objeto con "name" y "children".</p>
-    <textarea id="inputJSON" placeholder='{"name": "Raiz", "children": [{"name": "Hijo 1"}, {"name": "Hijo 2"}]}'></textarea>
-    <button onclick="leerJSON()">Generar</button>
-    <!-- boton para cargar archivo .json desde disco -->
-    <label class="btn-cargar-json">
-      &#128194; Cargar archivo .json
-      <input type="file" id="inputArchivoJSON" accept=".json" onchange="cargarArchivoJSON(event)" style="display:none;">
-    </label>
-  </div>
+      <!-- TARJETA 3: JSON -->
+      <div class="tarjeta">
+        <h2>Estructura JSON</h2>
+        <p>Pega un objeto con "name" y "children". La animacion corre sola.</p>
+        <textarea id="inputJSON" placeholder='{"name": "Raiz", "children": [{"name": "Hijo 1"}, {"name": "Hijo 2"}]}'></textarea>
+        <button onclick="leerJSON()">Generar</button>
+        <br>
+        <label class="btn-cargar-json">
+          &#128194; Cargar archivo .json
+          <input type="file" id="inputArchivoJSON" accept=".json" onchange="cargarArchivoJSON(event)" style="display:none;">
+        </label>
+      </div>
 
-  <!-- area donde se dibuja el arbol -->
-  <div class="canvas-container">
-    <div id="arbol-grafico" class="tree">
-      <span style="color: #484f58;">El arbol aparecera aqui...</span>
     </div>
+
+    <!-- ==============================
+         COLUMNA DERECHA: arbol
+    ============================== -->
+    <div class="columna-derecha">
+
+      <div class="canvas-container">
+        <div id="arbol-grafico" class="tree">
+          <span style="color: #484f58;">El arbol aparecera aqui...</span>
+        </div>
+      </div>
+
+      <div id="resultadosTexto"></div>
+
+    </div>
+
   </div>
 
-  <!-- area donde se muestran los recorridos -->
-  <div id="resultadosTexto"></div>
-
-  <!-- Conexion al archivo JavaScript -->
   <script src="arboles.js"></script>
 
 </body>
